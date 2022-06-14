@@ -89,10 +89,9 @@ pipeline {
             bat '''cd C:\\Jenkins_Agent
                    java -jar firstTest.jar 
              '''
-            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+          }
+          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                sh "exit 1"
-            }
-
           }
         }
 
