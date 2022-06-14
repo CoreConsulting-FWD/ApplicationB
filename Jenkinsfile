@@ -68,10 +68,14 @@ pipeline {
         }
 
         stage('Core Function 2') {
+          agent {
+            label 'kitkat'
+          }
           steps {
             echo "Commencing Core Function Test 2 on Application A"
-            echo "Init Selenium"
-            sh "sleep 3"
+            bat '''cd C:\\Jenkins_Agent
+                   java -jar 2ndTest.jar 
+             '''
             echo "Function Test 2 PASSED!"
           }
         }
@@ -85,6 +89,9 @@ pipeline {
             bat '''cd C:\\Jenkins_Agent
                    java -jar firstTest.jar 
              '''
+            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+               sh "exit 1"
+            }
 
           }
         }
