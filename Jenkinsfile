@@ -85,14 +85,15 @@ pipeline {
             label 'kitkat'
           }
           steps {
-            echo "Commencing Core Function Test 3 on Application A"
-            bat '''cd C:\\Jenkins_Agent
-                   java -jar firstTest.jar 
-             '''
+            echo "Commencing Core Function Test 3 on Application A"          
+            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+              bat '''cd C:\\Jenkins_Agent
+                     java -jar firstTest.jar 
+               '''
+            }
+
           }
-          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-               sh "exit 1"
-          }
+
         }
 
         stage('Core Function N') {
